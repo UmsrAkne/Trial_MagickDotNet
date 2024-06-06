@@ -34,6 +34,9 @@ namespace Trial_MagickDotNet.ViewModels
             // Image コントロールにセット
             ImageSource = ConvertToImageSource(preview);
 
+            // 画像のサイズを取得
+            ShowImageSize(filePath);
+
             // ImageSource に表示中の内容を png に出力も可能
             SaveImageToFile(ImageSource, "test.png");
         }
@@ -73,6 +76,13 @@ namespace Trial_MagickDotNet.ViewModels
             // ファイルに書き込み
             using var fileStream = new FileStream(filePath, FileMode.Create);
             encoder.Save(fileStream);
+        }
+
+        private void ShowImageSize(string filePath)
+        {
+            var info = new MagickImageInfo(filePath);
+            System.Diagnostics.Debug.WriteLine($"w = {info.Width}");
+            System.Diagnostics.Debug.WriteLine($"h = {info.Height}");
         }
     }
 }
